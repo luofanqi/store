@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>运动商城</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet"/>
+    <style>
+        .navbar-right { float: right !important; margin-right: 5px;}
+        .navbar-text { margin-right: 10px; }
+    </style>
+    <script src="js/angular.js"></script>
+    <script>
+        var myapp=angular.module("myapp",[]);
+    </script>
+    <script src="controller/myctrl.js"></script><!--控制器在模块后引入-->
+    <script src="controller/categorylist.js"></script>
+</head>
+<body ng-app="myapp" ng-controller="myCtrl">
+<h1>江帆杂货铺</h1>
+<div class="navbar navbar-inverse">
+    <a class="navbar-brand" href="#">运动商城</a>
+    <div class="navbar-right">
+        <div class="navbar-text">
+            <b>您的购物车:</b>
+            0个商品, RMB ￥ 0
+        </div>
+        <a class="btn btn-default navbar-btn">结账</a>
+    </div>
+</div>
+
+<div class="panel panel-default row" ng-controller="listCtrl">
+    <div class="col-xs-3">
+        <!--商品类别放这里-->
+        <a class="btn btn-block btn-default btn-lg" ng-click="selectCategory(null)">首页</a>
+        <!--生成导航元素-->
+        <a class=" btn btn-block btn-default btn-lg" ng-repeat="category in categories" ng-click="selectCategory(category.category)">
+            {{category.category}}
+        </a>
+    </div>
+
+    <div class="col-xs-8">
+        <!--产品信息放这里-->
+        <div class="well" ng-repeat="product in products | filter:''">
+            <h3>
+                <strong>{{product.name}}</strong>
+                <span class="pull-right label label-primary">{{product.price | currency:"RMB ￥"}}</span>
+            </h3>
+            <button class="btn btn-success btn-sm pull-right">加入购物车</button>
+            <img ng-src="{{product.url}}" style="padding-right: 10px;"/><span class="lead">{{product.description}}</span>
+            {{showProduct(product)}}
+        </div>
+
+        <!--分页导航按钮-->
+        <div class="pull-right btn-group">
+            <a class="btn btn-default">1</a>
+            <a class="btn btn-default">2</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
